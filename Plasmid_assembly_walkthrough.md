@@ -146,6 +146,8 @@ samtools view /path/to/reads_sorted.bam | head
 Polish the assembly from canu call `nanopolish_makerange.py` for assemblys > 1mb and `variants` <100 kb
 
 ```
-nanopolish variants --consensus plasmid_polished.fasta  -w "plasmid_name" -r /path/to/plasmid_trimmed_15k.fastq -b /path/to/reads_sorted.bam -g /path/to/plasmid_trimmed_15k.fastq
+nanopolish variants --consensus plasmid_polished.fasta  -w "plasmid_name:0-n" -r /path/to/plasmid_trimmed_15k.fastq -b /path/to/reads_sorted.bam -g /path/to/plasmid_trimmed_15k.fastq
 ```
-
+`variants --consensus` : construct new polished consensus sequence.
+`-w "plasmid_name:0-n` plasmid name and range in fasta header to polish, replace n with the length of the plasmid sequence.
+`
