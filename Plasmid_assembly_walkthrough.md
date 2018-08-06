@@ -102,7 +102,7 @@ Check assembly in bandage. Then use the .gfa file to find the overlap at the two
 Alternitivly search the start or end of the assembly to find the overlap trim point. This is importent for nanopolish to have
 better end alignments. 
 
-Save trimmed plasmid sequence to `/path/to/output/plasmid_trimmed_15k.fastq` with the header in the fastq file set
+Save trimmed plasmid sequence to `/path/to/output/plasmid_trimmed_15k.fasta` with the header in the fastq file set
 to `>plasmid_ID`.
 
 ## Polish the assembly with Nanopolish.
@@ -133,7 +133,7 @@ nanopolish index -d /path/to/plasmid_sample_fast5/ /path/to/plasmid_cat_chop_15k
 Align `plasmid_cat_chop_15k.fastq` with the draft assembly from canu using `minimap2` and index them using `samtools`.
 
 ```
-minimap2 -ax map-ont -t 96 /path/to/plasmid_trimmed_15k.fastq /path/to/plasmid_cat_chop_15k.fastq | samtools sort -o /path/to/output/reads_sorted.bam -T reads.tmp
+minimap2 -ax map-ont -t 96 /path/to/plasmid_trimmed_15k.fasta /path/to/plasmid_cat_chop_15k.fastq | samtools sort -o /path/to/output/reads_sorted.bam -T reads.tmp
 samtools index reads.sorted.bam
 ```
 
@@ -146,8 +146,21 @@ samtools view /path/to/reads_sorted.bam | head
 Polish the assembly from canu call `nanopolish_makerange.py` for assemblys > 1mb and `variants` <100 kb
 
 ```
-nanopolish variants --consensus plasmid_polished.fasta  -w "plasmid_name:0-n" -r /path/to/plasmid_trimmed_15k.fastq -b /path/to/reads_sorted.bam -g /path/to/plasmid_trimmed_15k.fastq
+nanopolish variants --consensus plasmid_polished.fasta  -w "plasmid_name:0-n" -r /path/to/plasmid_trimmed_15k.fastq -b /path/to/reads_sorted.bam -g /path/to/plasmid_trimmed_15k.fasta
 ```
 `variants --consensus` : construct new polished consensus sequence.
 `-w "plasmid_name:0-n` plasmid name and range in fasta header to polish, replace n with the length of the plasmid sequence.
-`
+`-r` path to fastq reads
+`-b` path to .bam
+`-g` path to draft assembly
+
+
+## Prokka plasmid anotation
+
+Create plasmid database from genbank in .gb format. Here we used 891 plasmid sequences associated with ST131 [All fields] OR CTXM* [gene] NOT partial [All fields]. Name as `plasmid.gb`
+
+`prokka --proteins path/to/plasmid.gb --genus Escherichia --species coli --strain ST131 --kingdom Bacteria --gcode 11 --usegenus path/to/plasmid_polished.fasta`
+
+View in artimis, annotate in DNAviewer.
+
+
