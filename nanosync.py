@@ -7,12 +7,11 @@
 # Instructions for use:
 # Modify 'path/to/external/SSD' in python script before use.
 # Make file executable with 'chmod +x nanosync.py'.
-# Place nanosync.py in minION output fast5 folder.
-# Change to fast5 dir in terminal.
+# Place nanosync.py in minION output dir (set in minKNOW gui).
+# Change to minION output dir containing nanosync.py in terminal.
 # Start sequencing run in minKNOW.
 # Run ./nanosync.py in terminal to sync fast5 with external SSD.
 # Test before use.
-
 ##################################################################
 
 import os
