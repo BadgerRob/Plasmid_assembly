@@ -1,5 +1,10 @@
 #!/usr/bin/env python3
 
+##################################################################
+# NanoSync, a python script for syncing fast5 files from a local HD to an external SSD during a sequencing reaction.
+# Removes fast5 files from local HD once synced with SSD.
+
+# Instructions for use:
 # Modify 'path/to/external/SSD' in python script before use.
 # Make file executable with 'chmod +x nanosync.py'.
 # Place nanosync.py in minION output fast5 folder.
@@ -8,6 +13,7 @@
 # Run ./nanosync.py in terminal to sync fast5 with external SSD.
 # Test before use.
 
+##################################################################
 
 import os
 import time
